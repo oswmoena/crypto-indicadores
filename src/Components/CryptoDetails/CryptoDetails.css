@@ -1,0 +1,19 @@
+.crypto-details-container {
+    color: black;
+    background-color: #D6D7D9;
+    border-radius: 10px;
+    padding: 5% 3%;
+}
+
+.crypto-details-container .first-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.crypto-details-container .date-box {
+    margin-top: 2%
+}
+
+.crypto-details-container .second-row {
+    margin-top: 2%;
+}

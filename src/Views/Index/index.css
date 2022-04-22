@@ -1,0 +1,22 @@
+.container-index {
+    margin: 15% 15%;
+    background-color: #D6D7D9;
+    color: black;
+    height: calc(100vh - 600px);
+    padding: 5%;
+    border-radius: 15px;
+}
+
+.input-name {
+    width: 100%;
+}
+
+.button-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-next {
+    margin: 2% 0% !important;
+    background-color: #7F009F !important;
+}

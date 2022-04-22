@@ -1,0 +1,17 @@
+.crypto-container {
+    padding: 1%;
+    margin: 1% 0%;
+    border: 1px solid #110B1A;
+    background-color: lightgrey;
+    border-radius: 10px;
+}
+.crypto-container:hover {
+    background-color: #C6D7D9;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between;
+}

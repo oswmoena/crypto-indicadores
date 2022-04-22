@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #110B1A;
+  color: white;
+  padding: 5% 0%;
+  font-family: 'Roboto', sans-serif;
 }
 
 code {
