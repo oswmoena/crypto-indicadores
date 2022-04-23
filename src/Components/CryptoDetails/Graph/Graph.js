@@ -1,14 +1,24 @@
 import React from 'react'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 }];
+import './Graph.css'
+import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+import { formatDate } from '../../../Helpers/formatDate';
 
-export const Graph = () => {
+export const Graph = ({ indicator }) => {
+
+    let formattedData = indicator.serie.map(item => {
+        const { fecha, valor } = item
+        return {
+            fecha: formatDate(fecha).substring(0,5),
+            valor: valor
+        }
+    })
+
     return (
-        <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-    <XAxis dataKey="name" />
-    <YAxis />
-  </LineChart>
+        <LineChart width={700} height={300} data={formattedData.reverse()} margin={{ top: 5, right: 5, bottom: 5, left: 22 }}>
+            <Line type="monotone" dataKey="valor" stroke="#8884d8" />
+            <XAxis dataKey="fecha" />
+            <YAxis dataKey="valor" domain={['dataMin', 'dataMax']}/>
+            <Tooltip />
+        </LineChart>
     )
 }

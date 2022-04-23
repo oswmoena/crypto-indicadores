@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getIndicatorByCode } from '../../Providers/Endpoints';
 import './CryptoDetails.css'
 import Box from '@mui/material/Box';
@@ -14,8 +14,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import { Graph } from './Graph/Graph';
+import { Button } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -35,7 +37,7 @@ function TabPanel(props) {
   );
 }
 
-function a11yProps(index) {
+const a11yProps = (index) => {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
@@ -44,6 +46,7 @@ function a11yProps(index) {
 
 export const CryptoDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { code } = location.state;
   const [indicator, setIndicator] = useState(null)
   const [date, setDate] = React.useState(new Date());
@@ -70,15 +73,22 @@ export const CryptoDetails = () => {
   return (<div className='crypto-details-container'>
     {indicator
       ? <div>
+        <div>
+          <Button variant='contained' onClick={() => navigate(-1)} color="secondary">
+            <ArrowBackIosIcon />
+            Atrás
+          </Button>
+        </div>
         <div className="first-row">
           <h2>{indicator.nombre}</h2>
-          <div className='date-box'>
+          <div className='date-box' style={{ display: 'none' }}>
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
               <DatePicker
                 value={date}
                 onChange={(newValue) => {
                   setDate(newValue);
                 }}
+
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
@@ -96,10 +106,9 @@ export const CryptoDetails = () => {
               <List indicator={indicator} />
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
-              <Graph />
+              <Graph indicator={indicator} />
             </TabPanel>
           </Box>
-          {/* <List indicator={indicator} /> */}
         </div>
       </div>
       :

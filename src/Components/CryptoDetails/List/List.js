@@ -7,13 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { unitValue } from '../../../Helpers/UnitValue';
+import { formatDate } from '../../../Helpers/formatDate';
 
 export const List = ({ indicator }) => {
-
-    const formatDate = (date) => {
-        const newDate = new Date(date)
-        return newDate.toLocaleDateString('en-GB')
-    }
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
