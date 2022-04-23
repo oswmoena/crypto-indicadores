@@ -37,7 +37,7 @@ export const Home = () => {
     <div className='home-container'>
       <h3>Hola {name}</h3>
       <p>Te presento los indicadores de criptomonedas al dia de hoy:</p>
-      {indicators.length < 0
+      {indicators.length <= 0
         ?
         <Box sx={{ width: '100%' }}>
           <Skeleton />

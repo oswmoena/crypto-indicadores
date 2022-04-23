@@ -9,20 +9,49 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import frLocale from 'date-fns/locale/fr';
+import { List } from './List/List';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import { Graph } from './Graph/Graph';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography component={'span'}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export const CryptoDetails = () => {
   const location = useLocation();
   const { code } = location.state;
   const [indicator, setIndicator] = useState(null)
   const [date, setDate] = React.useState(new Date());
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   const fetchIndicatorsByCode = async () => {
     const callEndpoint = await getIndicatorByCode(code);
@@ -37,12 +66,6 @@ export const CryptoDetails = () => {
     }
     // eslint-disable-next-line
   }, [])
-
-  const formatDate = (date) => {
-    const newDate = new Date(date)
-    return newDate.toLocaleDateString('en-GB')
-  }
-
 
   return (<div className='crypto-details-container'>
     {indicator
@@ -62,27 +85,21 @@ export const CryptoDetails = () => {
           </div>
         </div>
         <div className='second-row'>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Fecha</TableCell>
-                  <TableCell >Valor</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {indicator.serie.map((serieDate, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">{formatDate(serieDate.fecha)}</TableCell>
-                    <TableCell >{serieDate.valor.toLocaleString('es-CL')}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={tabValue} onChange={handleChange} >
+                <Tab label="Lista" {...a11yProps(0)} />
+                <Tab label="Gráfico" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={tabValue} index={0}>
+              <List indicator={indicator} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <Graph />
+            </TabPanel>
+          </Box>
+          {/* <List indicator={indicator} /> */}
         </div>
       </div>
       :

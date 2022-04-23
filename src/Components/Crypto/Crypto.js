@@ -2,6 +2,7 @@ import React from 'react'
 import './Crypto.css'
 
 import { useNavigate } from 'react-router-dom'
+import { unitValue } from '../../Helpers/UnitValue';
 
 export const Crypto = ({ indicator }) => {
 
@@ -11,18 +12,18 @@ export const Crypto = ({ indicator }) => {
   const strDate = new Date(fecha);
 
 
-  const unitValue = () => {
-    switch (unidad_medida) {
-      case "Pesos":
-        return `$${valor.toLocaleString('es-CL')}`
-      case "Porcentaje":
-        return `${valor}%`
-      case "Dólar":
-        return `USD$${valor.toLocaleString('en-US')}`
-      default:
-        break;
-    }
-  }
+  // const unitValue = () => {
+  //   switch (unidad_medida) {
+  //     case "Pesos":
+  //       return `$${valor.toLocaleString('es-CL')}`
+  //     case "Porcentaje":
+  //       return `${valor}%`
+  //     case "Dólar":
+  //       return `USD$${valor.toLocaleString('en-US')}`
+  //     default:
+  //       break;
+  //   }
+  // }
 
   const handleClickIndicator = () => {
     navigate('/crypto-details', { state: { code: codigo } })
@@ -32,7 +33,7 @@ export const Crypto = ({ indicator }) => {
     <div className='crypto-container' onClick={handleClickIndicator}>
       <div className='first-row'>
         <h4>{nombre}</h4>
-        <h2>{unitValue()}</h2>
+        <h2>{unitValue(unidad_medida, valor)}</h2>
       </div>
       <div className='second-row'>
         Al {strDate.toLocaleDateString('en-GB')}
